@@ -24,3 +24,14 @@ measured_impedance = (
     (0.5 * blood_pressure) +
     np.random.normal(0, 10, n_samples)  # Measurement noise
 )
+
+# Calculate cholesterol as a function of all variables (meaningful non-linear relationship)
+cholesterol = (
+    150 +
+    (0.1 * measured_impedance) +
+    (0.5 * bmi) +
+    (0.2 * blood_pressure) -
+    (0.3 * ear_luminosity * age) +
+    np.random.normal(0, 5, n_samples)  # Cholesterol noise
+)
+
