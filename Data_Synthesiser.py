@@ -54,3 +54,9 @@ synthetic_data = pd.DataFrame({
     "Required Impedance": required_impedance,
     "Bias": bias
 })
+
+# Save the synthetic dataset
+synthetic_data.to_csv("Enhanced_Impedance_Dataset.csv", index=False)
+
+# Display the first few rows
+synthetic_data.head()
