@@ -35,3 +35,22 @@ cholesterol = (
     np.random.normal(0, 5, n_samples)  # Cholesterol noise
 )
 
+
+# Calculate required impedance based on cholesterol
+required_impedance = (cholesterol - 150) / 0.3  # Reverse the linear equation
+
+# Calculate bias
+bias = required_impedance - measured_impedance
+
+# Combine into a DataFrame
+synthetic_data = pd.DataFrame({
+    "Measured Cholesterol": cholesterol,
+    "Ear Thickness": ear_thickness,
+    "Ear Luminosity": ear_luminosity,
+    "Age": age,
+    "BMI": bmi,
+    "Blood Pressure": blood_pressure,
+    "Measured Impedance": measured_impedance,
+    "Required Impedance": required_impedance,
+    "Bias": bias
+})
