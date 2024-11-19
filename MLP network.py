@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
+import matplotlib.pyplot as plt
 
 # Load the dataset
 data = pd.read_csv("Enhanced_Impedance_Dataset.csv")
@@ -75,3 +76,27 @@ predicted_cholesterol = regressor.predict(np.array(adjusted_impedance).reshape(-
 # Calculate Mean Absolute Error for cholesterol prediction
 mae_cholesterol = np.mean(np.abs(actual_cholesterol_test - predicted_cholesterol))
 print(f"Mean Absolute Error in Cholesterol Prediction: {mae_cholesterol}")
+
+# Plot training and validation loss over epochs
+plt.figure(figsize=(10, 6))
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.xlabel('Epochs', fontsize=14)
+plt.ylabel('Loss (MSE)', fontsize=14)
+plt.title('Training and Validation Loss', fontsize=16)
+plt.legend(fontsize=12)
+plt.grid(alpha=0.5)
+plt.show()
+
+# Plot actual vs predicted cholesterol
+plt.figure(figsize=(10, 6))
+plt.scatter(actual_cholesterol_test, predicted_cholesterol, color='blue', alpha=0.6, label='Predicted Cholesterol')
+plt.plot([actual_cholesterol_test.min(), actual_cholesterol_test.max()],
+         [actual_cholesterol_test.min(), actual_cholesterol_test.max()],
+         color='red', linestyle='--', label='Perfect Prediction')
+plt.xlabel('Actual Cholesterol', fontsize=14)
+plt.ylabel('Predicted Cholesterol', fontsize=14)
+plt.title('Actual vs. Predicted Cholesterol', fontsize=16)
+plt.legend(fontsize=12)
+plt.grid(alpha=0.5)
+plt.show()
