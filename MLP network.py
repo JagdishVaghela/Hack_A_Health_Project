@@ -53,3 +53,25 @@ history = model.fit(
     verbose=1, 
     callbacks=[early_stopping]
 )
+
+# Evaluate the model on the test set
+loss, mae = model.evaluate(X_test_scaled, y_test, verbose=0)
+print(f"Test Mean Absolute Error for Bias Prediction: {mae}")
+
+# Predict bias for the test set
+predicted_bias = model.predict(X_test_scaled).flatten()
+
+# Adjust impedance using predicted bias
+adjusted_impedance = Z_test + predicted_bias
+
+# Train a regression model for cholesterol prediction (optional improvement)
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(np.array(adjusted_impedance).reshape(-1, 1), actual_cholesterol_test)
+
+# Predict cholesterol using the regression model
+predicted_cholesterol = regressor.predict(np.array(adjusted_impedance).reshape(-1, 1))
+
+# Calculate Mean Absolute Error for cholesterol prediction
+mae_cholesterol = np.mean(np.abs(actual_cholesterol_test - predicted_cholesterol))
+print(f"Mean Absolute Error in Cholesterol Prediction: {mae_cholesterol}")
