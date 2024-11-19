@@ -43,3 +43,13 @@ model.compile(optimizer='adam', loss='mse', metrics=['mae'])
 
 # Add early stopping to prevent overfitting
 early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+
+# Train the model
+history = model.fit(
+    X_train_scaled, y_train, 
+    validation_data=(X_test_scaled, y_test), 
+    epochs=100, 
+    batch_size=32, 
+    verbose=1, 
+    callbacks=[early_stopping]
+)
